@@ -17,8 +17,6 @@ public class BuilderDB {
     private String url = "jdbc:postgresql://dpg-ch0m7fjh4hsukp3vd9a0-a.frankfurt-postgres.render.com:5432/reactorsbd";
     private String user = "kkolbassa";
     private String password = "RxLS1HZOi09baytXk1r0dFQ9Y4yG0nq2";
-    private Integer[] order = {3, 2, 4, 1, 0};
-
 
 
     public void createBD(){
@@ -35,7 +33,7 @@ public class BuilderDB {
                     + "model VARCHAR(50),"
                     + "class VARCHAR(50),"
                     + "ru_design VARCHAR(50) ,"
-                    + "operator serial references companies (id),"
+                    + "operator SMALLINT,"
                     + "nsss_supplier SMALLINT,"
                     + "thermal_capacity SMALLINT,"
                     + "gross_capacity SMALLINT,"
@@ -49,8 +47,8 @@ public class BuilderDB {
             String sql2 = "CREATE TABLE IF NOT EXISTS public.sites (" +
                     "id SERIAL PRIMARY KEY, " +
                     "npp_name VARCHAR(255) NOT NULL, " +
-                    "place serial references countries (id), " +
-                    "owner_id serial references companies (id), " +
+                    "place SMALLINT, " +
+                    "owner_id SMALLINT, " +
                     "operator SMALLINT, " +
                     "builder SMALLINT )";
 
@@ -59,7 +57,7 @@ public class BuilderDB {
                     + "country_name VARCHAR(200),"
                     + "subregion VARCHAR(200),"
                     + "region VARCHAR(200),"
-                    + "region_id serial references regions (id)"
+                    + "region_id SMALLINT"
                     + ");";
 
             String sql4 = "CREATE TABLE IF NOT EXISTS public.regions ("
@@ -116,7 +114,7 @@ public class BuilderDB {
                 FileInputStream fis = new FileInputStream(file);
                 Workbook workbook = WorkbookFactory.create(fis);
 
-                for (Integer i : order) {
+                for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
                     Sheet sheet = workbook.getSheetAt(i);
                     String tableName = sheet.getSheetName();
 
