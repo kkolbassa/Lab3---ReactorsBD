@@ -25,7 +25,7 @@ public class ReaderUnits implements ReaderBD{
                         result.getString("code"),
                         result.getString("unit_name"),
                         result.getInt("site"),
-                        result.getString("status"),
+                        result.getString("status").trim(),
                         result.getString("type"),
                         result.getString("model"),
                         result.getString("class"),

@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,6 +16,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.*;
+import org.example.dataBD.Unit;
+import org.example.reactors.Reactor;
 import org.example.readersBD.*;
 
 public class BuilderBD {
@@ -27,14 +31,14 @@ public class BuilderBD {
         tablesCreation = new ArrayList<>();
         tablesCreation.add("CREATE TABLE IF NOT EXISTS public.units ("
                 + "id SERIAL PRIMARY KEY,"
-                + "code VARCHAR(50),"
-                + "unit_name VARCHAR(100),"
+                + "code TEXT,"
+                + "unit_name TEXT,"
                 + "site SMALLINT,"
-                + "status VARCHAR(50),"
-                + "type VARCHAR(50),"
-                + "model VARCHAR(50),"
-                + "class VARCHAR(50),"
-                + "ru_design VARCHAR(50) ,"
+                + "status TEXT,"
+                + "type TEXT,"
+                + "model TEXT,"
+                + "class TEXT,"
+                + "ru_design TEXT ,"
                 + "operator SMALLINT,"
                 + "nsss_supplier SMALLINT,"
                 + "thermal_capacity SMALLINT,"
@@ -43,31 +47,31 @@ public class BuilderBD {
                 + "construction_start DATE,"
                 + "commercial_operation DATE,"
                 + "date_shutdown DATE,"
-                + "enrichment NUMERIC(5),"
+                + "enrichment NUMERIC(6,5),"
                 + "load_factor SMALLINT"
                 + ")");
         tablesCreation.add("CREATE TABLE IF NOT EXISTS public.sites (" +
                 "id SERIAL PRIMARY KEY, " +
-                "npp_name VARCHAR(255) NOT NULL, " +
+                "npp_name TEXT, " +
                 "place SMALLINT, " +
                 "owner_id SMALLINT, " +
                 "operator SMALLINT, " +
                 "builder SMALLINT )");
         tablesCreation.add("CREATE TABLE IF NOT EXISTS public.countries ("
                 + "id SERIAL PRIMARY KEY,"
-                + "country_name VARCHAR(200),"
-                + "subregion VARCHAR(200),"
-                + "region VARCHAR(200),"
+                + "country_name TEXT,"
+                + "subregion TEXT,"
+                + "region TEXT,"
                 + "region_id SMALLINT"
                 + ");");
         tablesCreation.add("CREATE TABLE IF NOT EXISTS public.regions ("
                 + "id SERIAL PRIMARY KEY,"
-                + "region_name VARCHAR(200)"
+                + "region_name TEXT"
                 + ");");
         tablesCreation.add("CREATE TABLE IF NOT EXISTS public.companies ("
                 + "id SERIAL PRIMARY KEY,"
-                + "companies_name VARCHAR(200),"
-                + "full_name VARCHAR(200),"
+                + "companies_name TEXT,"
+                + "full_name TEXT,"
                 + "country_id SMALLINT"
                 + ");");
 
@@ -207,7 +211,21 @@ public class BuilderBD {
                 throw new RuntimeException(e);
             }
         });
-        storageBD.getCountries().forEach(a-> System.out.println(a.getCountry_name()));
     }
+    public void filterUnitsInOperation(){
+        storageBD.setUnits ((ArrayList<Unit>) storageBD.getUnits().stream().filter(unit -> unit.getStatus().equals("in operation")).collect(Collectors.toList()));
+    }
+    public void addInfo2Units(ArrayList<Reactor> reactors){
+        Map<String, Double> reactorEnrichmentMap = reactors.stream()
+                .collect(Collectors.toMap(r -> r.getClassReactor(), r -> r.getBurnup()));
+
+        storageBD.getUnits().forEach(u -> {
+            if (u.getLoad_factor() == 0.0) {
+                u.setLoad_factor(reactorEnrichmentMap.getOrDefault(u.getType(), 0.0));
+            }
+        });
+        storageBD.getUnits().forEach(u -> System.out.println(u.getId() + "  "+ u.getEnrichment()));
+    }
+
 
 }

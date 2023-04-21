@@ -3,13 +3,14 @@ package org.example.manipulationBD;
 import org.example.dataBD.*;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class StorageBD {
-    ArrayList<Company> companies;
-    ArrayList<Country> countries;
-    ArrayList<Site> sites;
-    ArrayList<Unit> units;
-    ArrayList<Region> regions;
+    private ArrayList<Company> companies;
+    private ArrayList<Country> countries;
+    private ArrayList<Site> sites;
+    private ArrayList<Unit> units;
+    private ArrayList<Region> regions;
 
     public ArrayList<Company> getCompanies() {
         return companies;
@@ -50,4 +51,6 @@ public class StorageBD {
     public void setRegions(ArrayList<Region> regions) {
         this.regions = regions;
     }
+
+
 }

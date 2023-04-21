@@ -142,16 +142,6 @@ classdef ReactorType
             params.life_time = 36;
             params.first_load = 0.007;
         end
-        function params = PWR_TEST
-            params.class = 'PWR';
-            params.burnup = 40;
-            params.kpd = 0.33;
-            params.enrichment = 0.044;
-            params.termal_capacity = 3200;
-            params.electrical_capacity = 1056;
-            params.life_time = 60;
-            params.first_load = 79.84;
-        end
         function reactor = fill_info(reactor)
             r_fields = fieldnames(reactor);
             if isempty(reactor.class)
