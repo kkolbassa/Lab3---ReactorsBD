@@ -17,15 +17,13 @@ public class ReaderCompanies implements ReaderBD{
         try (Connection con = connector.getConnection();
              Statement st = con.createStatement();
 
-             ResultSet rs = st.executeQuery("SELECT * FROM public.companies")) {
+             ResultSet resultSet = st.executeQuery("SELECT * FROM public.companies")) {
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String companyName = rs.getString("companies_name");
-                String fullName = rs.getString("full_name");
-                int countryId = rs.getInt("country_id");
-
-                companies.add(new Company(id, companyName, fullName, countryId));
+            while (resultSet.next()) {
+                companies.add(new Company(resultSet.getInt("id"),
+                        resultSet.getString("companies_name"),
+                        resultSet.getString("full_name"),
+                        resultSet.getInt("country_id")));
             }
             storageBD.setCompanies(companies);
         } catch (SQLException ex) {
