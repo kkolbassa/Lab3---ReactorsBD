@@ -1,4 +1,4 @@
-package org.example;
+package org.example.manipulationBD;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +14,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.*;
-import org.example.dataBD.StorageBD;
 import org.example.readersBD.*;
 
 public class BuilderBD {

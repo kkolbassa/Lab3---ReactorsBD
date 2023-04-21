@@ -1,4 +1,6 @@
-package org.example.dataBD;
+package org.example.manipulationBD;
+
+import org.example.dataBD.*;
 
 import java.util.ArrayList;
 

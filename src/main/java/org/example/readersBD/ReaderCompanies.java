@@ -1,8 +1,8 @@
 package org.example.readersBD;
 
-import org.example.Connector;
+import org.example.manipulationBD.Connector;
 import org.example.dataBD.Company;
-import org.example.dataBD.StorageBD;
+import org.example.manipulationBD.StorageBD;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
