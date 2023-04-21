@@ -216,15 +216,15 @@ public class BuilderBD {
         storageBD.setUnits ((ArrayList<Unit>) storageBD.getUnits().stream().filter(unit -> unit.getStatus().equals("in operation")).collect(Collectors.toList()));
     }
     public void addInfo2Units(ArrayList<Reactor> reactors){
-        Map<String, Double> reactorEnrichmentMap = reactors.stream()
+        Map<String, Double> reactorBurnupMap = reactors.stream()
                 .collect(Collectors.toMap(r -> r.getClassReactor(), r -> r.getBurnup()));
 
-        storageBD.getUnits().forEach(u -> {
-            if (u.getLoad_factor() == 0.0) {
-                u.setLoad_factor(reactorEnrichmentMap.getOrDefault(u.getType(), 0.0));
-            }
+        storageBD.getUnits().forEach(u -> {u.setBurnup(reactorBurnupMap.getOrDefault(u.getClass_(), 0.0));
         });
-        storageBD.getUnits().forEach(u -> System.out.println(u.getId() + "  "+ u.getEnrichment()));
+        storageBD.getUnits().forEach(u -> {if(u.getBurnup()==0.0) u.setBurnup(reactorBurnupMap.getOrDefault(u.getType(), 0.0));
+        });
+        storageBD.getUnits().forEach(u -> System.out.println(u.getId() + "  "+ u.getBurnup()));
+
     }
 
 

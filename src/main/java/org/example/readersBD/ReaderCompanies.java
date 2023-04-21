@@ -21,7 +21,7 @@ public class ReaderCompanies implements ReaderBD{
 
             while (resultSet.next()) {
                 companies.add(new Company(resultSet.getInt("id"),
-                        resultSet.getString("companies_name"),
+                        resultSet.getString("companies_name").trim(),
                         resultSet.getString("full_name"),
                         resultSet.getInt("country_id")));
             }

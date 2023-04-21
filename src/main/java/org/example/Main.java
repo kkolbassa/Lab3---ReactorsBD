@@ -12,11 +12,11 @@ public class Main {
        // new JFrameProgram().setVisible(true);
         BuilderBD bdb = new BuilderBD();
         DataManipulation dm = new DataManipulation();
-        bdb.deleteBD();
+        /*bdb.deleteBD();
         bdb.createBD();
-        bdb.fillBD();
+        bdb.fillBD();*/
         bdb.getDataFromBD();
-        //bdb.filterUnitsInOperation();
+        bdb.filterUnitsInOperation();
         dm.importData("./data/Reactors_json.json");
         bdb.addInfo2Units(dm.getReactors());
     }

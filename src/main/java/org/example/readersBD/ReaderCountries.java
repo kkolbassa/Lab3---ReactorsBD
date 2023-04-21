@@ -21,9 +21,9 @@ public class ReaderCountries implements ReaderBD{
 
             while (resultSet.next()) {
                 countries.add(new Country(resultSet.getInt("id"),
-                 resultSet.getString("country_name"),
-                resultSet.getString("subregion"),
-                resultSet.getString("region"),
+                 resultSet.getString("country_name").trim(),
+                resultSet.getString("subregion").trim(),
+                resultSet.getString("region").trim(),
                 resultSet.getInt("region_id")
                 ));
 

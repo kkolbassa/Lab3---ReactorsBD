@@ -22,7 +22,7 @@ public class ReaderRegions implements ReaderBD{
             while (resultSet.next()) {
                 regions.add(new Region(
                         resultSet.getInt("id"),
-                        resultSet.getString("region_name")
+                        resultSet.getString("region_name").trim()
                 ));
 
                 storageBD.setRegions(regions);
