@@ -15,18 +15,16 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.*;
 import org.example.dataBD.StorageBD;
-import org.example.readersBD.ReaderBD;
-import org.example.readersBD.ReaderCompanies;
-import org.example.readersBD.ReaderUnits;
+import org.example.readersBD.*;
 
-public class BuilderDB {
+public class BuilderBD {
     private Connector connector = new Connector();
     private ArrayList<String> tablesCreation;
     private ArrayList<String> tablesDelete;
     private StorageBD storageBD = new StorageBD();
     private ArrayList<ReaderBD> readerBDS = new ArrayList<>();
 
-    public BuilderDB() {
+    public BuilderBD() {
         tablesCreation = new ArrayList<>();
         tablesCreation.add("CREATE TABLE IF NOT EXISTS public.units ("
                 + "id SERIAL PRIMARY KEY,"
@@ -80,6 +78,12 @@ public class BuilderDB {
         tablesDelete.add("DROP TABLE IF EXISTS public.countries;");
         tablesDelete.add("DROP TABLE IF EXISTS public.companies;");
         tablesDelete.add("DROP TABLE IF EXISTS public.regions;");
+
+        readerBDS.add(new ReaderCompanies());
+        readerBDS.add(new ReaderUnits());
+        readerBDS.add(new ReaderCountries());
+        readerBDS.add(new ReaderSites());
+        readerBDS.add(new ReaderRegions());
     }
 
     public void createBD() {
@@ -196,8 +200,7 @@ public class BuilderDB {
         }
     }
     public void getDataFromBD(){
-        readerBDS.add(new ReaderCompanies());
-        readerBDS.add(new ReaderUnits());
+
         readerBDS.forEach(r -> {
             try {
                 r.getData(connector, storageBD);
@@ -205,7 +208,7 @@ public class BuilderDB {
                 throw new RuntimeException(e);
             }
         });
-        storageBD.getUnits().forEach(a-> System.out.println(a.getSite()));
+        storageBD.getCountries().forEach(a-> System.out.println(a.getCountry_name()));
     }
 
 }

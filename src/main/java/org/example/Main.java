@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws IOException, SQLException {
        // new JFrameProgram().setVisible(true);
-        BuilderDB bdb = new BuilderDB();
+        BuilderBD bdb = new BuilderBD();
 /*        bdb.deleteBD();
         bdb.createBD();
         bdb.fillBD();*/
