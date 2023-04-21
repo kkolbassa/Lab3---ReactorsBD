@@ -8,8 +8,9 @@ public class Main {
     public static void main(String[] args) throws IOException, SQLException {
        // new JFrameProgram().setVisible(true);
         BuilderDB bdb = new BuilderDB();
-        bdb.deleteBD();
+/*        bdb.deleteBD();
         bdb.createBD();
-        bdb.fillBD();
+        bdb.fillBD();*/
+        bdb.getDataFromBD();
     }
 }
