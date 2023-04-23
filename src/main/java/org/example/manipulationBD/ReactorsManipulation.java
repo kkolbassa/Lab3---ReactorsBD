@@ -1,6 +1,5 @@
 package org.example.manipulationBD;
 
-import org.example.dataBD.Company;
 import org.example.dataBD.Country;
 import org.example.dataBD.Region;
 import org.example.dataBD.Unit;
@@ -62,13 +61,13 @@ public class ReactorsManipulation {
         });
     }
     public Map<String, Double> aggregateCountry(){
-        // создаем Map, группируя Units по местам(sites)
+
         //Map<id_site, List<Unit>>
         Map<Integer, List<Unit>> reactorsBySite = storageBD.getUnits().stream()
                 .collect(Collectors.groupingBy(Unit::getSite));
 
         // Map<country, fuelConsumption>
-        Map<String, Double> fuelConsumptionByCountry = new HashMap<>();
+        Map<String, Double> countryFuelConsumption = new HashMap<>();
 
         for (Country country : storageBD.getCountries()) {
             double fuelConsumption = reactorsBySite.entrySet().stream()
@@ -77,19 +76,18 @@ public class ReactorsManipulation {
                     .flatMap(entry -> entry.getValue().stream())
                     .mapToDouble(Unit::getFuelConsumption)
                     .sum();
-            fuelConsumptionByCountry.put(country.getCountry_name(), fuelConsumption);
+            countryFuelConsumption.put(country.getCountry_name(), fuelConsumption);
         }
-        System.out.println(fuelConsumptionByCountry);
-        return fuelConsumptionByCountry;
+        System.out.println(countryFuelConsumption);
+        return countryFuelConsumption;
     }
 
     public Map<String, Double> aggregateRegion(){
-        // Создаем Map, где ключом является название региона, а значением - суммарное fuelConsupmtion в этом регионе
+
         Map<String, Double> regionFuelConsumption = new HashMap<>();
 
         Map<String, Double> fuelConsumptionByCountry = aggregateCountry();
 
-        // Затем для каждого региона считаем суммарное fuelConsupmtion из суммарного fuelConsupmtion всех его стран
         for (Region region : storageBD.getRegions()) {
             double sumFuelConsumption = storageBD.getCountries().stream()
                     .filter(country -> country.getRegion_id() == region.getId())
