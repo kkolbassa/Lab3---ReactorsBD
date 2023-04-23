@@ -20,9 +20,9 @@ public class Main {
         rm.filterUnitsInOperation();
         rm.addInfo2Units();
         rm.addFuelConsumption();
-        rm.aggregateCountry();
+        /*rm.aggregateCountry();
         rm.aggregateRegion();
-        rm.aggregateCompany();
+        rm.aggregateCompany();*/
 
     }
 }

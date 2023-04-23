@@ -3,7 +3,7 @@ package org.example.manipulationBD;
 import org.example.dataBD.*;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+
 
 public class StorageBD {
     private ArrayList<Company> companies;
@@ -12,6 +12,20 @@ public class StorageBD {
     private ArrayList<Unit> units;
     private ArrayList<Region> regions;
 
+    public StorageBD(ArrayList<Unit> units, ArrayList<Company> companies, ArrayList<Country> countries, ArrayList<Site> sites, ArrayList<Region> regions) {
+        this.companies = companies;
+        this.countries = countries;
+        this.sites = sites;
+        this.units = units;
+        this.regions = regions;
+    }
+
+    public StorageBD() {
+    }
+
+    public void addUnit(Unit unit){
+        units.add(unit);
+    }
     public ArrayList<Company> getCompanies() {
         return companies;
     }
@@ -53,4 +67,7 @@ public class StorageBD {
     }
 
 
+    public StorageBD copy() {
+        return new StorageBD(getUnits(),getCompanies(),getCountries(),getSites(),getRegions());
+    }
 }

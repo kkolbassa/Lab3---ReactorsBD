@@ -12,11 +12,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ReactorsManipulation {
-    private StorageBD storageBD;
-    private ReactorCollection reactorCollection;
+    private final StorageBD storageBDInitial;
+    private  StorageBD storageBD;
+    private final ReactorCollection reactorCollection;
 
     public ReactorsManipulation(StorageBD storageBD, ReactorCollection reactorCollection) {
-        this.storageBD = storageBD;
+        this.storageBDInitial = storageBD;
+        this.storageBD = storageBD.copy();
         this.reactorCollection = reactorCollection;
     }
 
@@ -32,13 +34,12 @@ public class ReactorsManipulation {
         return reactorCollection;
     }
 
-    public void setReactorCollection(ReactorCollection reactorCollection) {
-        this.reactorCollection = reactorCollection;
+    public void filterUnitsInOperation(){
+        storageBD.setUnits ((ArrayList<Unit>) storageBD.getUnits().stream()
+                .filter(unit -> unit.getStatus().equals("in operation"))
+                .collect(Collectors.toList()));
     }
 
-    public void filterUnitsInOperation(){
-        storageBD.setUnits ((ArrayList<Unit>) storageBD.getUnits().stream().filter(unit -> unit.getStatus().equals("in operation")).collect(Collectors.toList()));
-    }
     public void addInfo2Units(){
 
         Map<String, Double> reactorBurnupMap = reactorCollection.getReactors().stream()
@@ -48,7 +49,7 @@ public class ReactorsManipulation {
         });
         storageBD.getUnits().forEach(u -> {if(u.getBurnup()==0.0) u.setBurnup(reactorBurnupMap.getOrDefault(u.getType(), 0.0));
         });
-        //storageBD.getUnits().forEach(u -> System.out.println(u.getId() + "  "+ u.getBurnup()));
+       // storageBD.getUnits().forEach(u -> System.out.println(u.getId() + "  "+ u.getBurnup()));
     }
 
     public void addFuelConsumption(){
@@ -56,9 +57,22 @@ public class ReactorsManipulation {
             if(u.getLoad_factor() == 0) u.setLoad_factor(90);
             if(u.getBurnup()!=0.0) {
                 u.setFuelConsumption(365*u.getThermal_capacity() / u.getBurnup() * u.getLoad_factor() * 0.01/1000);
-                System.out.println(u.getUnit_name()+" " + u.getFuelConsumption());
             }
         });
+
+        Map<String, Double> reactorFirstLoadMap = reactorCollection.getReactors().stream()
+                .collect(Collectors.toMap(r -> r.getClassReactor(), r -> r.getFirst_load()));
+
+        storageBDInitial.getUnits().forEach(unit -> {
+            if(unit.getCommercial_operation()!=null&&unit.getCommercial_operation().substring(0, 4).equals("2023")){
+                storageBD.addUnit(unit);
+                int index = storageBD.getUnits().indexOf(unit);
+                storageBD.getUnits().get(index).setFuelConsumption(reactorFirstLoadMap.getOrDefault(unit.getType(), 0.0));
+            }
+        });
+
+        storageBD.getUnits().forEach(unit -> System.out.println(unit.getUnit_name()+" " + unit.getFuelConsumption()));
+
     }
     public Map<String, Double> aggregateCountry(){
 
