@@ -1,4 +1,4 @@
-package org.example.dataManipulation;
+package org.example.collections;
 
 import org.example.reactors.Reactor;
 

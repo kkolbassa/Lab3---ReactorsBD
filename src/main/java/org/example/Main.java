@@ -1,8 +1,8 @@
 package org.example;
 
-import org.example.dataManipulation.DataManipulation;
+import org.example.parserManipulation.ParserManipulation;
 import org.example.manipulationBD.BuilderBD;
-import org.example.manipulationBD.ReactorsManipulation;
+import org.example.reactorsManipulation.ReactorsManipulation;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
        // new JFrameProgram().setVisible(true);
         BuilderBD bdb = new BuilderBD();
-        DataManipulation dm = new DataManipulation();
+        ParserManipulation dm = new ParserManipulation();
         /*bdb.deleteBD();
         bdb.createBD();
         bdb.fillBD();*/

@@ -1,7 +1,7 @@
 package org.example.readersBD;
 
 import org.example.manipulationBD.Connector;
-import org.example.manipulationBD.StorageBD;
+import org.example.collections.StorageBD;
 import org.example.dataBD.Unit;
 
 import java.sql.Connection;

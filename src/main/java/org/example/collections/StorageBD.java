@@ -1,4 +1,4 @@
-package org.example.manipulationBD;
+package org.example.collections;
 
 import org.example.dataBD.*;
 

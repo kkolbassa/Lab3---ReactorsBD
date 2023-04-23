@@ -1,10 +1,12 @@
-package org.example.manipulationBD;
+package org.example.reactorsManipulation;
 
+import org.example.collections.StorageBD;
 import org.example.dataBD.Country;
 import org.example.dataBD.Region;
 import org.example.dataBD.Unit;
-import org.example.dataManipulation.ReactorCollection;
+import org.example.collections.ReactorCollection;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +14,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ReactorsManipulation {
-    private final StorageBD storageBDInitial;
+    private StorageBD storageBDInitial;
     private  StorageBD storageBD;
-    private final ReactorCollection reactorCollection;
+    private ReactorCollection reactorCollection;
+
+    public ReactorsManipulation() {
+    }
 
     public ReactorsManipulation(StorageBD storageBD, ReactorCollection reactorCollection) {
         this.storageBDInitial = storageBD;
@@ -22,16 +27,33 @@ public class ReactorsManipulation {
         this.reactorCollection = reactorCollection;
     }
 
+    public ReactorsManipulation(StorageBD storageBDInitial) {
+        this.storageBDInitial = storageBDInitial;
+    }
+
+    public ReactorsManipulation(ReactorCollection reactorCollection) {
+        this.reactorCollection = reactorCollection;
+    }
+
     public StorageBD getStorageBD() {
         return storageBD;
     }
 
-    public void setStorageBD(StorageBD storageBD) {
-        this.storageBD = storageBD;
+    public void setReactorCollection(ReactorCollection reactorCollection) {
+        this.reactorCollection = reactorCollection;
+    }
+
+    public void setStorageBDInitial(StorageBD storageBD) {
+        this.storageBDInitial = storageBD;
+        this.storageBD = storageBD.copy();
     }
 
     public ReactorCollection getReactorCollection() {
         return reactorCollection;
+    }
+    public DefaultMutableTreeNode addInfo2GUI(){
+        return reactorCollection.addInfo2GUI();
+
     }
 
     public void filterUnitsInOperation(){

@@ -1,19 +1,17 @@
-package org.example.dataManipulation;
+package org.example.parserManipulation;
 
+import org.example.collections.ReactorCollection;
 import org.example.convertFiles.ConvertJson2types;
 import org.example.reactorParser.ReactorParser;
 import org.example.reactorParser.ReactorParserJson;
 import org.example.reactorParser.ReactorParserXml;
 import org.example.reactorParser.ReactorParserYaml;
-import org.example.reactors.Reactor;
 
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class DataManipulation {
-    public static ReactorCollection reactors = new ReactorCollection();
+
+public class ParserManipulation {
 
     public void createFiles() throws IOException {
         if (new File("./data/Reactors_json.json").exists()) {
@@ -57,8 +55,4 @@ public class DataManipulation {
         return reactors;
     }
 
-    public DefaultMutableTreeNode addInfo2GUI(){
-        return reactors.addInfo2GUI();
-
-    }
 }

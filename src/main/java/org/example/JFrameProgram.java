@@ -5,7 +5,9 @@
  */
 package org.example;
 
-import org.example.dataManipulation.DataManipulation;
+import org.example.parserManipulation.ParserManipulation;
+import org.example.manipulationBD.BuilderBD;
+import org.example.reactorsManipulation.ReactorsManipulation;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,11 +21,13 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class JFrameProgram extends javax.swing.JFrame {
 
-    public static DataManipulation dm = new DataManipulation();
+    public static ParserManipulation pm = new ParserManipulation();
+    public static ReactorsManipulation rm = new ReactorsManipulation();
+    public static BuilderBD bd = new BuilderBD();
     public JFrameProgram() throws IOException {
         initComponents();
         try {
-            dm.createFiles();
+            pm.createFiles();
         }catch (Exception e){
             JOptionPane.showMessageDialog (null, "Ошибка добавления файлов с расширениями", "Oшибка", JOptionPane.ERROR_MESSAGE);
         }
@@ -100,8 +104,8 @@ public class JFrameProgram extends javax.swing.JFrame {
         jTreeReactors.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Реакторы")));
        try {
            File file = chooser.getSelectedFile();
-           dm.importData(String.valueOf(file));
-           jTreeReactors.setModel(new DefaultTreeModel(dm.addInfo2GUI()));
+           rm.setReactorCollection(pm.importData(String.valueOf(file)));
+           jTreeReactors.setModel(new DefaultTreeModel(rm.addInfo2GUI()));
        }catch (Exception r){
            JOptionPane.showMessageDialog (null, "Ошибка чтения файла", "Oшибка", JOptionPane.ERROR_MESSAGE);
        }
