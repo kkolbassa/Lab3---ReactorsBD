@@ -5,11 +5,11 @@ import org.example.manipulationBD.BuilderBD;
 import org.example.manipulationBD.ReactorsManipulation;
 
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 
 public class Main {
-    public static void main(String[] args) throws IOException, SQLException {
+    public static void main(String[] args) throws IOException {
        // new JFrameProgram().setVisible(true);
         BuilderBD bdb = new BuilderBD();
         DataManipulation dm = new DataManipulation();
@@ -20,6 +20,9 @@ public class Main {
         rm.filterUnitsInOperation();
         rm.addInfo2Units();
         rm.addFuelConsumption();
+        rm.aggregateCountry();
+        rm.aggregateRegion();
+        rm.aggregateCompany();
 
     }
 }

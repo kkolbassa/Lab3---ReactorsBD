@@ -1,5 +1,7 @@
 package org.example.dataBD;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Country {
     private int id;
     private String country_name;
@@ -9,9 +11,9 @@ public class Country {
 
     public Country(int id, String country_name, String subregion, String region, int region_id) {
         this.id = id;
-        this.country_name = country_name;
-        this.subregion = subregion;
-        this.region = region;
+        this.country_name = StringUtils.trimToNull(country_name);
+        this.subregion = StringUtils.trimToNull(subregion);
+        this.region = StringUtils.trimToNull(region);
         this.region_id = region_id;
     }
 

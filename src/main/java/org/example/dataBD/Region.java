@@ -1,6 +1,8 @@
 package org.example.dataBD;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Region {
 
     private int id;
@@ -8,7 +10,7 @@ public class Region {
 
     public Region(int id, String region_name) {
         this.id = id;
-        this.region_name = region_name;
+        this.region_name = StringUtils.trimToNull(region_name);
     }
 
     public int getId() {

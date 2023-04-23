@@ -1,9 +1,14 @@
 package org.example.manipulationBD;
 
+import org.example.dataBD.Company;
+import org.example.dataBD.Country;
+import org.example.dataBD.Region;
 import org.example.dataBD.Unit;
 import org.example.dataManipulation.ReactorCollection;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -52,9 +57,64 @@ public class ReactorsManipulation {
             if(u.getLoad_factor() == 0) u.setLoad_factor(90);
             if(u.getBurnup()!=0.0) {
                 u.setFuelConsumption(365*u.getThermal_capacity() / u.getBurnup() * u.getLoad_factor() * 0.01/1000);
-                System.out.println(u.getFuelConsumption());
+                System.out.println(u.getUnit_name()+" " + u.getFuelConsumption());
             }
         });
+    }
+    public Map<String, Double> aggregateCountry(){
+        // создаем Map, группируя Units по местам(sites)
+        //Map<id_site, List<Unit>>
+        Map<Integer, List<Unit>> reactorsBySite = storageBD.getUnits().stream()
+                .collect(Collectors.groupingBy(Unit::getSite));
+
+        // Map<country, fuelConsumption>
+        Map<String, Double> fuelConsumptionByCountry = new HashMap<>();
+
+        for (Country country : storageBD.getCountries()) {
+            double fuelConsumption = reactorsBySite.entrySet().stream()
+                    .filter(entry -> storageBD.getSites().stream()
+                            .anyMatch(site -> site.getId() == entry.getKey() && site.getPlace() == country.getId()))
+                    .flatMap(entry -> entry.getValue().stream())
+                    .mapToDouble(Unit::getFuelConsumption)
+                    .sum();
+            fuelConsumptionByCountry.put(country.getCountry_name(), fuelConsumption);
+        }
+        System.out.println(fuelConsumptionByCountry);
+        return fuelConsumptionByCountry;
+    }
+
+    public Map<String, Double> aggregateRegion(){
+        // Создаем Map, где ключом является название региона, а значением - суммарное fuelConsupmtion в этом регионе
+        Map<String, Double> regionFuelConsumption = new HashMap<>();
+
+        Map<String, Double> fuelConsumptionByCountry = aggregateCountry();
+
+        // Затем для каждого региона считаем суммарное fuelConsupmtion из суммарного fuelConsupmtion всех его стран
+        for (Region region : storageBD.getRegions()) {
+            double sumFuelConsumption = storageBD.getCountries().stream()
+                    .filter(country -> country.getRegion_id() == region.getId())
+                    .mapToDouble(country -> fuelConsumptionByCountry.getOrDefault(country.getCountry_name(), 0.0))
+                    .sum();
+            regionFuelConsumption.put(region.getRegion_name(), sumFuelConsumption);
+        }
+
+        System.out.println(regionFuelConsumption);
+        return regionFuelConsumption;
+    }
+
+    public Map<String, Double> aggregateCompany(){
+
+        Map<Integer, Double> reactorsByOperator = storageBD.getUnits().stream()
+                .collect(Collectors.groupingBy(Unit::getOperator,
+                        Collectors.summingDouble(Unit::getFuelConsumption)));
+
+        Map<String, Double> companyFuelConsumption = new HashMap<>();
+
+        storageBD.getCompanies().forEach(company -> {
+            companyFuelConsumption.put(company.getCompanies_name(), reactorsByOperator.getOrDefault(company.getId(), 0.0));
+        });
+        System.out.println(companyFuelConsumption);
+        return companyFuelConsumption;
     }
 
 }

@@ -1,5 +1,7 @@
 package org.example.dataBD;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Unit {
     private int id;
     private String code;
@@ -26,14 +28,14 @@ public class Unit {
 
     public Unit(int id, String code, String unit_name, int site, String status, String type, String model, String class_, String ru_design, int operator, int nsss_supplier, int thermal_capacity, int gross_capacity, int net_capacity, String construction_start, String commercial_operation, String date_shutdown, double enrichment, int load_factor) {
         this.id = id;
-        this.code = code;
-        this.unit_name = unit_name;
+        this.code = StringUtils.trimToNull(code);
+        this.unit_name = StringUtils.trimToNull(unit_name);
         this.site = site;
-        this.status = status;
-        this.type = type;
-        this.model = model;
-        this.class_ = class_;
-        this.ru_design = ru_design;
+        this.status = StringUtils.trimToNull(status);
+        this.type = StringUtils.trimToNull(type);
+        this.model = StringUtils.trimToNull(model);
+        this.class_ = StringUtils.trimToNull(class_);
+        this.ru_design = StringUtils.trimToNull(ru_design);
         this.operator = operator;
         this.nsss_supplier = nsss_supplier;
         this.thermal_capacity = thermal_capacity;

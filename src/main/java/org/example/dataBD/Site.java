@@ -1,5 +1,7 @@
 package org.example.dataBD;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Site {
     private int id;
     private String npp_name;
@@ -10,7 +12,7 @@ public class Site {
 
     public Site(int id, String npp_name, int place, int owner_id, int operator, int builder) {
         this.id = id;
-        this.npp_name = npp_name;
+        this.npp_name = StringUtils.trimToNull(npp_name);
         this.place = place;
         this.owner_id = owner_id;
         this.operator = operator;

@@ -1,4 +1,5 @@
 package org.example.dataBD;
+import org.apache.commons.lang3.StringUtils;
 
 public class Company {
     private int id;
@@ -8,8 +9,8 @@ public class Company {
 
     public Company(int id, String companies_name, String full_name, int country_id) {
         this.id = id;
-        this.companies_name = companies_name;
-        this.full_name = full_name;
+        this.companies_name = StringUtils.trimToNull(companies_name);
+        this.full_name = StringUtils.trimToNull(full_name);
         this.country_id = country_id;
     }
 
