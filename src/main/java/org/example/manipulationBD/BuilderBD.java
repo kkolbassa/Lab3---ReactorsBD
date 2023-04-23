@@ -24,7 +24,6 @@ public class BuilderBD {
     private Connector connector = new Connector();
     private ArrayList<String> tablesCreation;
     private ArrayList<String> tablesDelete;
-    private StorageBD storageBD = new StorageBD();
     private ArrayList<ReaderBD> readerBDS = new ArrayList<>();
 
     public BuilderBD() {
@@ -202,8 +201,8 @@ public class BuilderBD {
             e.printStackTrace();
         }
     }
-    public void getDataFromBD(){
-
+    public StorageBD getDataFromBD(){
+        StorageBD storageBD = new StorageBD();
         readerBDS.forEach(r -> {
             try {
                 r.getData(connector, storageBD);
@@ -211,21 +210,7 @@ public class BuilderBD {
                 throw new RuntimeException(e);
             }
         });
+        return storageBD;
     }
-    public void filterUnitsInOperation(){
-        storageBD.setUnits ((ArrayList<Unit>) storageBD.getUnits().stream().filter(unit -> unit.getStatus().equals("in operation")).collect(Collectors.toList()));
-    }
-    public void addInfo2Units(ArrayList<Reactor> reactors){
-        Map<String, Double> reactorBurnupMap = reactors.stream()
-                .collect(Collectors.toMap(r -> r.getClassReactor(), r -> r.getBurnup()));
-
-        storageBD.getUnits().forEach(u -> {u.setBurnup(reactorBurnupMap.getOrDefault(u.getClass_(), 0.0));
-        });
-        storageBD.getUnits().forEach(u -> {if(u.getBurnup()==0.0) u.setBurnup(reactorBurnupMap.getOrDefault(u.getType(), 0.0));
-        });
-        storageBD.getUnits().forEach(u -> System.out.println(u.getId() + "  "+ u.getBurnup()));
-
-    }
-
 
 }

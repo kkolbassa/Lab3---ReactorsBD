@@ -21,6 +21,8 @@ public class Unit {
     private double enrichment;
     private int load_factor;
     private double burnup;
+    private double fuelConsumption;
+
 
     public Unit(int id, String code, String unit_name, int site, String status, String type, String model, String class_, String ru_design, int operator, int nsss_supplier, int thermal_capacity, int gross_capacity, int net_capacity, String construction_start, String commercial_operation, String date_shutdown, double enrichment, int load_factor) {
         this.id = id;
@@ -56,6 +58,13 @@ public class Unit {
         this.burnup = burnup;
     }
 
+    public double getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(double fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
+    }
     public int getId() {
         return id;
     }

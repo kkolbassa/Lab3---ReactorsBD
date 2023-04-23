@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.dataManipulation.DataManipulation;
 import org.example.manipulationBD.BuilderBD;
+import org.example.manipulationBD.ReactorsManipulation;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,9 +16,10 @@ public class Main {
         /*bdb.deleteBD();
         bdb.createBD();
         bdb.fillBD();*/
-        bdb.getDataFromBD();
-        bdb.filterUnitsInOperation();
-        dm.importData("./data/Reactors_json.json");
-        bdb.addInfo2Units(dm.getReactors());
+        ReactorsManipulation rm = new ReactorsManipulation(bdb.getDataFromBD(),dm.importData("./data/Reactors_json.json"));
+        rm.filterUnitsInOperation();
+        rm.addInfo2Units();
+        rm.addFuelConsumption();
+
     }
 }

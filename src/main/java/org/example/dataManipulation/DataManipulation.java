@@ -36,7 +36,8 @@ public class DataManipulation {
         }
         return extension;
     }
-    public void importData(String filePath) throws IOException {;
+    public ReactorCollection importData(String filePath) throws IOException {;
+        ReactorCollection reactors = new ReactorCollection();
         ReactorParser reactorParser = null;
         switch (getExtension(filePath)){
             case "xml":{
@@ -53,9 +54,7 @@ public class DataManipulation {
             }
         }
         reactors.setReactors(reactorParser.parse(filePath));
-    }
-    public ArrayList<Reactor> getReactors(){
-        return reactors.getReactors();
+        return reactors;
     }
 
     public DefaultMutableTreeNode addInfo2GUI(){
