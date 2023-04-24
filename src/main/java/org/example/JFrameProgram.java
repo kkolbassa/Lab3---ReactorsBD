@@ -12,8 +12,7 @@ import org.example.reactorsManipulation.ReactorsManipulation;
 
 import java.io.File;
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +24,7 @@ public class JFrameProgram extends javax.swing.JFrame {
     public static ParserManipulation pm = new ParserManipulation();
     public static ReactorsManipulation rm = new ReactorsManipulation();
     public static BuilderBD bd = new BuilderBD();
+    private boolean firstLoad = true;
     public JFrameProgram() {
         initComponents();
         try {
@@ -74,8 +74,6 @@ public class JFrameProgram extends javax.swing.JFrame {
                 new Object [][] {
                         {},
                         {},
-                        {},
-                        {}
                 },
                 new String [] {
 
@@ -254,67 +252,128 @@ public class JFrameProgram extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonOpenJFileChooserParserActionPerformed
 
     private void jButtonFileChooserBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFileChooserBDActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Выберите файл для БД");
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            try {
-                File file = chooser.getSelectedFile();
-                bd.fillBD(String.valueOf(file));
-                jLabelUpdateBD.setText("Файл с БД загружен");
+        if(jLabelCreationBD.getText().equals("БД не создана")) JOptionPane.showMessageDialog(null, "БД не создана!", "Oшибка", JOptionPane.ERROR_MESSAGE);
+        else {
+            if(jLabelUpdateBD.getText().equals("Данные загружены в БД")) JOptionPane.showMessageDialog(null, "Данные уже загружены в БД!", "Oшибка", JOptionPane.ERROR_MESSAGE);
+            else {
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Выберите файл для БД");
+                if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        File file = chooser.getSelectedFile();
+                        bd.fillBD(String.valueOf(file));
+                        jLabelUpdateBD.setText(bd.areDataExist());
 
-            } catch (Exception r) {
-                JOptionPane.showMessageDialog(null, "Ошибка чтения файла для заполнения БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
-                jLabelUpdateBD.setText("Файл с БД не загружен");
+                    } catch (Exception r) {
+                        JOptionPane.showMessageDialog(null, "Ошибка чтения файла для заполнения БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
+                        jLabelUpdateBD.setText("Данные не загружены в БД");
+                    }
             }
+        }
 
         }
     }//GEN-LAST:event_jButtonFileChooserBDActionPerformed
 
     private void jButtonCreateBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateBDActionPerformed
-        try {
-            bd.createBD();
-            jLabelCreationBD.setText("БД создана");
-            jLabelDeleteBD.setText("");
-        }catch (Exception r){
-            JOptionPane.showMessageDialog(null, "Ошибка создания БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
-            jLabelCreationBD.setText("БД не создана");
-        }
+       if(jLabelCreationBD.getText().equals("БД создана")) JOptionPane.showMessageDialog(null, "БД уже создана!", "Oшибка", JOptionPane.ERROR_MESSAGE);
+       else {
+           try {
+               bd.createBD();
+               jLabelCreationBD.setText("БД создана");
+               jLabelDeleteBD.setText("");
+           } catch (Exception r) {
+               JOptionPane.showMessageDialog(null, "Ошибка создания БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
+               jLabelCreationBD.setText("БД не создана");
+           }
+       }
 
     }//GEN-LAST:event_jButtonCreateBDActionPerformed
 
     private void jButtonDeleteBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteBDActionPerformed
-        try {
-            bd.createBD();
-            rm.setStorageBDInitial(new StorageBD());
-            jLabelDeleteBD.setText("БД удалена");
-            jLabelCreationBD.setText("БД не создана");
-            jLabelUpdateBD.setText("Файл с БД не загружен");
-            jLabelGetDataBD.setText("Данные не получены");
-        }catch (Exception r){
-            JOptionPane.showMessageDialog(null, "Ошибка удаления БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
-            jLabelDeleteBD.setText("БД не удалена");
+        if(jLabelCreationBD.getText().equals("БД не создана"))JOptionPane.showMessageDialog(null, "Ошибка: БД не создана", "Oшибка", JOptionPane.ERROR_MESSAGE);
+        else {
+            try {
+                bd.deleteBD();
+                rm.setStorageBDInitial(new StorageBD());
+                jLabelDeleteBD.setText("БД удалена");
+                jLabelCreationBD.setText(bd.areTablesExist());
+                jLabelUpdateBD.setText(bd.areDataExist());
+                jLabelGetDataBD.setText("Данные не получены");
+            } catch (Exception r) {
+                JOptionPane.showMessageDialog(null, "Ошибка удаления БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
+                jLabelDeleteBD.setText("БД не удалена");
+            }
         }
     }//GEN-LAST:event_jButtonDeleteBDActionPerformed
     private void jButtonGetDataBDActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            rm.setStorageBDInitial(bd.getDataFromBD());
-            jLabelGetDataBD.setText("Данные получены");
-        } catch (Exception r) {
-            JOptionPane.showMessageDialog(null, "Ошибка получения данных из БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
-            jLabelGetDataBD.setText("Данные не получены");
+        if(jLabelUpdateBD.getText().equals("Данные не загружены в БД")) JOptionPane.showMessageDialog(null, "Ошибка: данные не загружены в БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
+        else {
+            try {
+                rm.setStorageBDInitial(bd.getDataFromBD());
+                jLabelGetDataBD.setText("Данные получены");
+                this.firstLoad = true;
+            } catch (Exception r) {
+                JOptionPane.showMessageDialog(null, "Ошибка получения данных из БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
+                jLabelGetDataBD.setText("Данные не получены");
+            }
+        }
+    }
+
+    public void prepareInfo(){
+        if(firstLoad) {
+            rm.filterUnitsInOperation();
+            rm.addInfo2Units();
+            rm.addFuelConsumption();
+            this.firstLoad = false;
         }
     }
 
     private void jButtonAggragateCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggragateCountryActionPerformed
-        // TODO add your handling code here:
+        if(jLabelGetDataBD.getText().equals("Данные получены")&&jLabelParserUpdate.getText().equals("Файл с реакторами загружен")){
+            prepareInfo();
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Страна");
+            model.addColumn("Объем ежегодного потребления, т.");
+
+            rm.aggregateCountry().forEach((key, value) -> {
+                model.addRow(new Object[]{key, value});
+            });
+            jTableFuelConsumption.setModel(model);
+        }else JOptionPane.showMessageDialog(null, "Не все данные загружены", "Oшибка", JOptionPane.ERROR_MESSAGE);
+
     }//GEN-LAST:event_jButtonAggragateCountryActionPerformed
 
     private void jButtonAggragateCompanyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggragateCompanyActionPerformed
-        // TODO add your handling code here:
+        if(jLabelGetDataBD.getText().equals("Данные получены")&&jLabelParserUpdate.getText().equals("Файл с реакторами загружен")){
+            prepareInfo();
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Компания");
+            model.addColumn("Объем ежегодного потребления, т.");
+
+            rm.aggregateCompany().forEach((key, value) -> {
+                model.addRow(new Object[]{key, value});
+            });
+            jTableFuelConsumption.setModel(model);
+        }else JOptionPane.showMessageDialog(null, "Не все данные загружены", "Oшибка", JOptionPane.ERROR_MESSAGE);
+
     }//GEN-LAST:event_jButtonAggragateCompanyActionPerformed
 
     private void jButtonAggragateRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggragateRegionActionPerformed
-        // TODO add your handling code here:
+        if(jLabelGetDataBD.getText().equals("Данные получены")&&jLabelParserUpdate.getText().equals("Файл с реакторами загружен")){
+            prepareInfo();
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Регион");
+            model.addColumn("Объем ежегодного потребления, т.");
+
+            rm.aggregateRegion().forEach((key, value) -> {
+                model.addRow(new Object[]{key, value});
+            });
+            jTableFuelConsumption.setModel(model);
+        }else JOptionPane.showMessageDialog(null, "Не все данные загружены", "Oшибка", JOptionPane.ERROR_MESSAGE);
+
     }//GEN-LAST:event_jButtonAggragateRegionActionPerformed
 
     /**

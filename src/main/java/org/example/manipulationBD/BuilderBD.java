@@ -17,6 +17,8 @@ import org.apache.poi.ss.usermodel.*;
 import org.example.collections.StorageBD;
 import org.example.readersBD.*;
 
+import javax.swing.*;
+
 public class BuilderBD {
     private Connector connector = new Connector();
     private ArrayList<String> tablesCreation;
@@ -98,7 +100,6 @@ public class BuilderBD {
                 if (!resultSet.next()) areExist = "БД не создана";
             }
         }catch (SQLException e) {
-                 e.printStackTrace();
                 areExist = "БД не создана";
                 }
 
@@ -119,7 +120,6 @@ public class BuilderBD {
                 }
             }
         }catch (SQLException e) {
-            e.printStackTrace();
             areExist = "Данные не загружены в БД";
         }
 
@@ -136,9 +136,8 @@ public class BuilderBD {
                     throw new RuntimeException(e);
                 }
             });
-            System.out.println("Таблица успешно создана!");
         } catch (SQLException e) {
-            System.out.println("Ошибка при подключении к базе данных: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ошибка создания БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -150,13 +149,11 @@ public class BuilderBD {
                 try {
                     stmt.executeUpdate(table);
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Oшибка", JOptionPane.ERROR_MESSAGE);
                 }
             });
-
-            System.out.println("Таблица успешно удалена");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Oшибка", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -226,17 +223,14 @@ public class BuilderBD {
                         }
 
                     }
-                    System.out.println(tableName);
-
                     pstmt.executeUpdate();
                 }
 
                 pstmt.close();
             }
 
-            System.out.println("Данные успешно загружены в базу данных");
         } catch (IOException | SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ошибка загрузки данных в БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
         }
     }
     public StorageBD getDataFromBD(){

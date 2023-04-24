@@ -71,7 +71,7 @@ public class ReactorsManipulation {
         });
         storageBD.getUnits().forEach(u -> {if(u.getBurnup()==0.0) u.setBurnup(reactorBurnupMap.getOrDefault(u.getType(), 0.0));
         });
-       // storageBD.getUnits().forEach(u -> System.out.println(u.getId() + "  "+ u.getBurnup()));
+
     }
 
     public void addFuelConsumption(){
@@ -114,7 +114,6 @@ public class ReactorsManipulation {
                     .sum();
             countryFuelConsumption.put(country.getCountry_name(), fuelConsumption);
         }
-        System.out.println(countryFuelConsumption);
         return countryFuelConsumption;
     }
 
@@ -132,7 +131,6 @@ public class ReactorsManipulation {
             regionFuelConsumption.put(region.getRegion_name(), sumFuelConsumption);
         }
 
-        System.out.println(regionFuelConsumption);
         return regionFuelConsumption;
     }
 
@@ -147,7 +145,6 @@ public class ReactorsManipulation {
         storageBD.getCompanies().forEach(company -> {
             companyFuelConsumption.put(company.getCompanies_name(), reactorsByOperator.getOrDefault(company.getId(), 0.0));
         });
-        System.out.println(companyFuelConsumption);
         return companyFuelConsumption;
     }
 
