@@ -94,10 +94,10 @@ public class JFrameProgram extends javax.swing.JFrame {
             }
         });
 
-        jLabelCreationBD.setText("БД создана");
+        jLabelCreationBD.setText(bd.areTablesExist());
         jLabelCreationBD.setEnabled(false);
 
-        jLabelUpdateBD.setText("Данные загружены");
+        jLabelUpdateBD.setText(bd.areDataExist());
         jLabelUpdateBD.setEnabled(false);
 
         jButtonCreateBD.setText("Создать БД");

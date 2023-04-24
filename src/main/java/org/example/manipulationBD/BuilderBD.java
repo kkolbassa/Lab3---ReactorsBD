@@ -22,6 +22,7 @@ public class BuilderBD {
     private ArrayList<String> tablesCreation;
     private ArrayList<String> tablesDelete;
     private ArrayList<ReaderBD> readerBDS = new ArrayList<>();
+    private String[] tableNames;
 
     public BuilderBD() {
         tablesCreation = new ArrayList<>();
@@ -78,11 +79,51 @@ public class BuilderBD {
         tablesDelete.add("DROP TABLE IF EXISTS public.companies;");
         tablesDelete.add("DROP TABLE IF EXISTS public.regions;");
 
+        this.tableNames = new String[]{"public.units", "public.sites", "public.countries", "public.companies", "public.regions"};
+
         readerBDS.add(new ReaderCompanies());
         readerBDS.add(new ReaderUnits());
         readerBDS.add(new ReaderCountries());
         readerBDS.add(new ReaderSites());
         readerBDS.add(new ReaderRegions());
+    }
+
+    public String areTablesExist() {
+        String areExist = "БД создана";
+
+        try (Connection conn = connector.getConnection();
+             Statement stmt = conn.createStatement()) {
+            for (String tableName : tableNames) {
+                ResultSet resultSet = stmt.executeQuery("SELECT COUNT(*) FROM " + tableName);
+                if (!resultSet.next()) areExist = "БД не создана";
+            }
+        }catch (SQLException e) {
+                 e.printStackTrace();
+                areExist = "БД не создана";
+                }
+
+        return areExist;
+    }
+
+    public String areDataExist() {
+        String areExist = "Данные загружены в БД";
+
+        try (Connection conn = connector.getConnection();
+             Statement stmt = conn.createStatement()) {
+            for (String tableName : tableNames) {
+                ResultSet resultSet = stmt.executeQuery("SELECT COUNT(*) FROM " + tableName);
+                if (!resultSet.next()) areExist = "Данные не загружены в БД";
+                else {
+                    int rowCount = resultSet.getInt(1);
+                    if (rowCount == 0) areExist = "Данные не загружены в БД";
+                }
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            areExist = "Данные не загружены в БД";
+        }
+
+        return areExist;
     }
 
     public void createBD() {
