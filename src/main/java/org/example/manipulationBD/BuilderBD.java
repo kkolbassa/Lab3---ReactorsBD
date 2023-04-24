@@ -119,10 +119,10 @@ public class BuilderBD {
         }
     }
 
-    public void fillBD() throws SQLException {
+    public void fillBD(String filePath) throws SQLException {
         try (Connection conn = connector.getConnection()) {
             // Чтение данных из Excel-файла и вставка их в таблицу базы данных
-            File file = new File("./data/ReactorData.xlsx");
+            File file = new File(filePath);
             FileInputStream fis = new FileInputStream(file);
             Workbook workbook = WorkbookFactory.create(fis);
 

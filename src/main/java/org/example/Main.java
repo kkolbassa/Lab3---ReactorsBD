@@ -10,19 +10,19 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-       // new JFrameProgram().setVisible(true);
-        BuilderBD bdb = new BuilderBD();
+        new JFrameProgram().setVisible(true);
+        /*BuilderBD bdb = new BuilderBD();
         ParserManipulation dm = new ParserManipulation();
-        /*bdb.deleteBD();
+        *//*bdb.deleteBD();
         bdb.createBD();
-        bdb.fillBD();*/
+        bdb.fillBD();*//*
         ReactorsManipulation rm = new ReactorsManipulation(bdb.getDataFromBD(),dm.importData("./data/Reactors_json.json"));
         rm.filterUnitsInOperation();
         rm.addInfo2Units();
         rm.addFuelConsumption();
-        /*rm.aggregateCountry();
+        *//*rm.aggregateCountry();
         rm.aggregateRegion();
-        rm.aggregateCompany();*/
-
+        rm.aggregateCompany();*//*
+*/
     }
 }
