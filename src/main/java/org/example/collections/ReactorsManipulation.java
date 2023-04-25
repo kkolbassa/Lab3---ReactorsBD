@@ -1,16 +1,10 @@
 package org.example.collections;
 
-import org.example.dataBD.Country;
-import org.example.dataBD.Region;
 import org.example.dataBD.Unit;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -102,7 +96,7 @@ public class ReactorsManipulation {
         });
     }
     public Map<String, Double> aggregateCountry(){
-        
+
         Map<Integer, Double> fuelConsumptionBySite = storageBD.getUnits().stream()
                 .collect(Collectors.groupingBy(Unit::getSite,
                         Collectors.summingDouble(Unit::getFuelConsumption)));
