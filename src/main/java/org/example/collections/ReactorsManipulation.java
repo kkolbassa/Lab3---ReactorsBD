@@ -1,10 +1,8 @@
 package org.example.collections;
 
-import org.example.collections.StorageBD;
 import org.example.dataBD.Country;
 import org.example.dataBD.Region;
 import org.example.dataBD.Unit;
-import org.example.collections.ReactorCollection;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
@@ -92,9 +90,6 @@ public class ReactorsManipulation {
                 storageBD.getUnits().get(index).setFuelConsumption(reactorFirstLoadMap.getOrDefault(unit.getType(), 0.0));
             }
         });
-
-        storageBD.getUnits().forEach(unit -> System.out.println(unit.getUnit_name()+" " + unit.getFuelConsumption()));
-
     }
     public Map<String, Double> aggregateCountry(){
 
