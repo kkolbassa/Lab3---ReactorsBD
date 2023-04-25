@@ -310,7 +310,7 @@ public class JFrameProgram extends javax.swing.JFrame {
         else {
             try {
                 rm.setStorageBDInitial(bd.getDataFromBD());
-                jLabelGetDataBD.setText(bd.areDataExist());
+                jLabelGetDataBD.setText(rm.areDataGet());
                 this.firstLoad = true;
             } catch (Exception r) {
                 JOptionPane.showMessageDialog(null, "Ошибка получения данных из БД", "Oшибка", JOptionPane.ERROR_MESSAGE);

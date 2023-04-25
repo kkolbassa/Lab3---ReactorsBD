@@ -5,6 +5,9 @@ import org.example.dataBD.Region;
 import org.example.dataBD.Unit;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +55,16 @@ public class ReactorsManipulation {
     public DefaultMutableTreeNode addInfo2GUI(){
         return reactorCollection.addInfo2GUI();
 
+    }
+    public String areDataGet() {
+        String areExist = "Данные получены";
+        if (storageBDInitial.getUnits().isEmpty()) areExist = "Данные не получены";
+        if (storageBDInitial.getCountries().isEmpty()) areExist = "Данные не получены";
+        if (storageBDInitial.getCompanies().isEmpty()) areExist = "Данные не получены";
+        if (storageBDInitial.getSites().isEmpty()) areExist = "Данные не получены";
+        if (storageBDInitial.getRegions().isEmpty()) areExist = "Данные не получены";
+
+        return areExist;
     }
 
     public void filterUnitsInOperation(){

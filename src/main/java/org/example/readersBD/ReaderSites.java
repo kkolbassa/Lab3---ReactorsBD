@@ -21,7 +21,7 @@ public class ReaderSites implements ReaderBD{
             while (resultSet.next()) {
                 sites.add(new Site(
                         resultSet.getInt("id"),
-                        resultSet.getString("npp_name").trim(),
+                        resultSet.getString("npp_name"),
                         resultSet.getInt("place"),
                         resultSet.getInt("owner_id"),
                         resultSet.getInt("operator"),
