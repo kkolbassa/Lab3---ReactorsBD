@@ -8,7 +8,7 @@ package org.example;/*
 import org.example.collections.StorageBD;
 import org.example.manipulationBD.BuilderBD;
 import org.example.parserManipulation.ParserManipulation;
-import org.example.reactorsManipulation.ReactorsManipulation;
+import org.example.collections.ReactorsManipulation;
 
 import java.io.File;
 import javax.swing.*;

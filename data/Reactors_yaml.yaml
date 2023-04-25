@@ -125,12 +125,3 @@
     electrical_capacity: 32
     life_time: 36
     first_load: 0.007
-- PWR_TEST:
-    class: "PWR"
-    burnup: 40
-    kpd: 0.33
-    enrichment: 0.044
-    termal_capacity: 3200
-    electrical_capacity: 1056
-    life_time: 60
-    first_load: 79.84

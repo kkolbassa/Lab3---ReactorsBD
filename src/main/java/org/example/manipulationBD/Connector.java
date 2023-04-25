@@ -3,6 +3,7 @@ package org.example.manipulationBD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Connector {
     private String url;
@@ -23,5 +24,9 @@ public class Connector {
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
+    }
+
+    public Statement createStatement() throws SQLException {
+        return getConnection().createStatement();
     }
 }

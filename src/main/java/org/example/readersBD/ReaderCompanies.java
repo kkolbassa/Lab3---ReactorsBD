@@ -4,7 +4,6 @@ import org.example.manipulationBD.Connector;
 import org.example.dataBD.Company;
 import org.example.collections.StorageBD;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,8 +13,7 @@ public class ReaderCompanies implements ReaderBD{
     @Override
     public void getData(Connector connector, StorageBD storageBD) throws SQLException {
         ArrayList<Company> companies = new ArrayList<>();
-        try (Connection con = connector.getConnection();
-             Statement st = con.createStatement();
+        try (Statement st = connector.createStatement();
 
              ResultSet resultSet = st.executeQuery("SELECT * FROM public.companies")) {
 

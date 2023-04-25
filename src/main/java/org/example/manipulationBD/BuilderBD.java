@@ -93,8 +93,7 @@ public class BuilderBD {
     public String areTablesExist() {
         String areExist = "БД создана";
 
-        try (Connection conn = connector.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Statement stmt = connector.createStatement()) {
             for (String tableName : tableNames) {
                 ResultSet resultSet = stmt.executeQuery("SELECT COUNT(*) FROM " + tableName);
                 if (!resultSet.next()) areExist = "БД не создана";
@@ -109,8 +108,7 @@ public class BuilderBD {
     public String areDataExist() {
         String areExist = "Данные загружены в БД";
 
-        try (Connection conn = connector.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Statement stmt = connector.createStatement()) {
             for (String tableName : tableNames) {
                 ResultSet resultSet = stmt.executeQuery("SELECT COUNT(*) FROM " + tableName);
                 if (!resultSet.next()) areExist = "Данные не загружены в БД";
@@ -127,8 +125,7 @@ public class BuilderBD {
     }
 
     public void createBD() {
-        try (Connection conn = connector.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Statement stmt = connector.createStatement()) {
             tablesCreation.forEach(table -> {
                 try {
                     stmt.executeUpdate(table);
@@ -142,8 +139,7 @@ public class BuilderBD {
     }
 
     public void deleteBD() {
-        try (Connection conn = connector.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Statement stmt = connector.createStatement()) {
 
             tablesDelete.forEach(table -> {
                 try {
