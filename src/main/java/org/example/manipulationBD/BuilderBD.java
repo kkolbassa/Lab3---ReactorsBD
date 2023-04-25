@@ -27,6 +27,7 @@ public class BuilderBD {
     private String[] tableNames;
 
     public BuilderBD() {
+        this.tableNames = new String[]{"public.units", "public.sites", "public.countries", "public.companies", "public.regions"};
         tablesCreation = new ArrayList<>();
         tablesCreation.add("CREATE TABLE IF NOT EXISTS public.units ("
                 + "id SERIAL PRIMARY KEY,"
@@ -80,8 +81,6 @@ public class BuilderBD {
         tablesDelete.add("DROP TABLE IF EXISTS public.countries;");
         tablesDelete.add("DROP TABLE IF EXISTS public.companies;");
         tablesDelete.add("DROP TABLE IF EXISTS public.regions;");
-
-        this.tableNames = new String[]{"public.units", "public.sites", "public.countries", "public.companies", "public.regions"};
 
         readerBDS.add(new ReaderCompanies());
         readerBDS.add(new ReaderUnits());
@@ -153,9 +152,9 @@ public class BuilderBD {
         }
     }
 
-    public void fillBD(String filePath) throws SQLException {
+    public void fillBD(String filePath) {
         try (Connection conn = connector.getConnection()) {
-            // Чтение данных из Excel-файла и вставка их в таблицу базы данных
+
             File file = new File(filePath);
             FileInputStream fis = new FileInputStream(file);
             Workbook workbook = WorkbookFactory.create(fis);
