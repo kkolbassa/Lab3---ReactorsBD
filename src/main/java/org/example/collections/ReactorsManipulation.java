@@ -58,11 +58,8 @@ public class ReactorsManipulation {
     }
     public String areDataGet() {
         String areExist = "Данные получены";
-        if (storageBDInitial.getUnits().isEmpty()) areExist = "Данные не получены";
-        if (storageBDInitial.getCountries().isEmpty()) areExist = "Данные не получены";
-        if (storageBDInitial.getCompanies().isEmpty()) areExist = "Данные не получены";
-        if (storageBDInitial.getSites().isEmpty()) areExist = "Данные не получены";
-        if (storageBDInitial.getRegions().isEmpty()) areExist = "Данные не получены";
+        if (storageBDInitial.getUnits().isEmpty()||storageBDInitial.getCountries().isEmpty()||storageBDInitial.getCompanies().isEmpty()
+        ||storageBDInitial.getSites().isEmpty()||storageBDInitial.getRegions().isEmpty()) areExist = "Данные не получены";
 
         return areExist;
     }
