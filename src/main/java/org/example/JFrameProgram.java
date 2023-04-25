@@ -79,6 +79,7 @@ public class JFrameProgram extends javax.swing.JFrame {
 
                 }
         ));
+        jTableFuelConsumption.setEnabled(false);
         jTableFuelConsumption.getTableHeader().setReorderingAllowed(false);
         jScrollPane.setViewportView(jTableFuelConsumption);
 
