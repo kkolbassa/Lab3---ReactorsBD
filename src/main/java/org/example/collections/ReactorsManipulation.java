@@ -102,23 +102,21 @@ public class ReactorsManipulation {
         });
     }
     public Map<String, Double> aggregateCountry(){
+        
+        Map<Integer, Double> fuelConsumptionBySite = storageBD.getUnits().stream()
+                .collect(Collectors.groupingBy(Unit::getSite,
+                        Collectors.summingDouble(Unit::getFuelConsumption)));
 
-        //Map<id_site, List<Unit>>
-        Map<Integer, List<Unit>> reactorsBySite = storageBD.getUnits().stream()
-                .collect(Collectors.groupingBy(Unit::getSite));
-
-        // Map<country, fuelConsumption>
         Map<String, Double> countryFuelConsumption = new HashMap<>();
 
-        for (Country country : storageBD.getCountries()) {
-            double fuelConsumption = reactorsBySite.entrySet().stream()
-                    .filter(entry -> storageBD.getSites().stream()
-                            .anyMatch(site -> site.getId() == entry.getKey() && site.getPlace() == country.getId()))
-                    .flatMap(entry -> entry.getValue().stream())
-                    .mapToDouble(Unit::getFuelConsumption)
+        storageBD.getCountries().forEach(country -> {
+            double fuelConsumption = storageBD.getSites().stream()
+                    .filter(site -> site.getPlace() == country.getId())
+                    .mapToDouble(site -> fuelConsumptionBySite.getOrDefault(site.getId(),0.0))
                     .sum();
-            countryFuelConsumption.put(country.getCountry_name(), fuelConsumption);
-        }
+            countryFuelConsumption.put(country.getCountry_name(),fuelConsumption);
+        });
+
         return countryFuelConsumption;
     }
 
@@ -127,14 +125,13 @@ public class ReactorsManipulation {
         Map<String, Double> regionFuelConsumption = new HashMap<>();
 
         Map<String, Double> fuelConsumptionByCountry = aggregateCountry();
-
-        for (Region region : storageBD.getRegions()) {
+        storageBD.getRegions().forEach(region -> {
             double sumFuelConsumption = storageBD.getCountries().stream()
                     .filter(country -> country.getRegion_id() == region.getId())
                     .mapToDouble(country -> fuelConsumptionByCountry.getOrDefault(country.getCountry_name(), 0.0))
                     .sum();
             regionFuelConsumption.put(region.getRegion_name(), sumFuelConsumption);
-        }
+        });
 
         return regionFuelConsumption;
     }
