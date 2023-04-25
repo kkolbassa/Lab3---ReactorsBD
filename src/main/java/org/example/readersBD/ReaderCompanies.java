@@ -4,6 +4,7 @@ import org.example.manipulationBD.Connector;
 import org.example.dataBD.Company;
 import org.example.collections.StorageBD;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,8 +25,8 @@ public class ReaderCompanies implements ReaderBD{
                         resultSet.getInt("country_id")));
             }
             storageBD.setCompanies(companies);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ошибка получения данных из БД"+e.getMessage(), "Oшибка", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -4,6 +4,7 @@ import org.example.manipulationBD.Connector;
 import org.example.dataBD.Region;
 import org.example.collections.StorageBD;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,7 +27,7 @@ public class ReaderRegions implements ReaderBD{
                 storageBD.setRegions(regions);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ошибка получения данных из БД"+e.getMessage(), "Oшибка", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

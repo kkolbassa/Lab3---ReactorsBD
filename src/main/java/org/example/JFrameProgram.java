@@ -54,7 +54,7 @@ public class JFrameProgram extends javax.swing.JFrame {
         jButtonCreateBD = new javax.swing.JButton();
         jButtonDeleteBD = new javax.swing.JButton();
         jLabelDeleteBD = new javax.swing.JLabel();
-        jLabelSumConsuption = new javax.swing.JLabel();
+        jLabelSumConsumption = new javax.swing.JLabel();
         jButtonAggragateCountry = new javax.swing.JButton();
         jButtonAggragateCompany = new javax.swing.JButton();
         jButtonAggragateRegion = new javax.swing.JButton();
@@ -113,8 +113,8 @@ public class JFrameProgram extends javax.swing.JFrame {
             }
         });
 
-        jLabelSumConsuption.setText("Расчитать суммарное потребление топлива по:");
-        jLabelSumConsuption.setEnabled(false);
+        jLabelSumConsumption.setText("Расчитать суммарное потребление топлива по:");
+        jLabelSumConsumption.setEnabled(false);
 
         jButtonAggragateCountry.setText("Странам");
         jButtonAggragateCountry.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +154,7 @@ public class JFrameProgram extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabelSumConsuption)
+                                        .addComponent(jLabelSumConsumption)
                                         .addComponent(jButtonAggragateCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(jButtonAggragateCompany, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
@@ -209,7 +209,7 @@ public class JFrameProgram extends javax.swing.JFrame {
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(jButtonDeleteBD, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(59, 59, 59)))
-                                                .addComponent(jLabelSumConsuption)
+                                                .addComponent(jLabelSumConsumption)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jButtonAggragateCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(26, 26, 26)
@@ -310,7 +310,7 @@ public class JFrameProgram extends javax.swing.JFrame {
         else {
             try {
                 rm.setStorageBDInitial(bd.getDataFromBD());
-                jLabelGetDataBD.setText("Данные получены");
+                jLabelGetDataBD.setText(bd.areDataExist());
                 this.firstLoad = true;
             } catch (Exception r) {
                 JOptionPane.showMessageDialog(null, "Ошибка получения данных из БД", "Oшибка", JOptionPane.ERROR_MESSAGE);
@@ -394,7 +394,7 @@ public class JFrameProgram extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDeleteBD;
     private javax.swing.JLabel jLabelGetDataBD;
     private javax.swing.JLabel jLabelParserUpdate;
-    private javax.swing.JLabel jLabelSumConsuption;
+    private javax.swing.JLabel jLabelSumConsumption;
     private javax.swing.JLabel jLabelUpdateBD;
     private javax.swing.JPanel jPanel;
     private javax.swing.JScrollPane jScrollPane;
