@@ -43,9 +43,9 @@ public class JFrameProgram extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel = new javax.swing.JPanel();
         jButtonOpenJFileChooserParser = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane = new javax.swing.JScrollPane();
         jTableFuelConsumption = new javax.swing.JTable();
         jLabelParserUpdate = new javax.swing.JLabel();
         jButtonFileChooserBD = new javax.swing.JButton();
@@ -80,7 +80,7 @@ public class JFrameProgram extends javax.swing.JFrame {
                 }
         ));
         jTableFuelConsumption.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTableFuelConsumption);
+        jScrollPane.setViewportView(jTableFuelConsumption);
 
         jLabelParserUpdate.setText("Файл не загружен");
         jLabelParserUpdate.setEnabled(false);
@@ -147,8 +147,8 @@ public class JFrameProgram extends javax.swing.JFrame {
         jLabelGetDataBD.setText("Данные не получены");
         jLabelGetDataBD.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -176,7 +176,7 @@ public class JFrameProgram extends javax.swing.JFrame {
                                                                 .addComponent(jLabelUpdateBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(jLabelDeleteBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
@@ -218,7 +218,7 @@ public class JFrameProgram extends javax.swing.JFrame {
                                                 .addComponent(jButtonAggragateRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,11 +226,11 @@ public class JFrameProgram extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -396,8 +396,8 @@ public class JFrameProgram extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelParserUpdate;
     private javax.swing.JLabel jLabelSumConsuption;
     private javax.swing.JLabel jLabelUpdateBD;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jPanel;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JTable jTableFuelConsumption;
     // End of variables declaration
 }
