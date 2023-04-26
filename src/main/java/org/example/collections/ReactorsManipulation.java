@@ -57,6 +57,12 @@ public class ReactorsManipulation {
 
         return areExist;
     }
+    public String areDataReactorGet() {
+        String areExist = "Файл с реакторами загружен";
+        if (reactorCollection.getReactors().isEmpty()) areExist = "Файл с реакторами не загружен";
+
+        return areExist;
+    }
 
     public void filterUnitsInOperation(){
         storageBD.setUnits ((ArrayList<Unit>) storageBD.getUnits().stream()

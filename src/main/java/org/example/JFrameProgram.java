@@ -244,7 +244,8 @@ public class JFrameProgram extends javax.swing.JFrame {
             try {
                 File file = chooser.getSelectedFile();
                 rm.setReactorCollection(pm.importData(String.valueOf(file)));
-                jLabelParserUpdate.setText("Файл с реакторами загружен");
+                //if(rm.getReactorCollection().getReactors().isEmpty()) throw new Exception();
+                jLabelParserUpdate.setText(rm.areDataReactorGet());
             }catch (Exception r){
                 JOptionPane.showMessageDialog (null, "Ошибка чтения файла для парсинга", "Oшибка", JOptionPane.ERROR_MESSAGE);
                 jLabelParserUpdate.setText("Файл с реакторами  не загружен");

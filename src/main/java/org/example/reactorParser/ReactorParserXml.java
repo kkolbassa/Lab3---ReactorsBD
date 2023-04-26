@@ -2,20 +2,23 @@ package org.example.reactorParser;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.example.reactors.Reactor;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReactorParserXml implements ReactorParser {
     @Override
-    public ArrayList<Reactor> parse(String filePath) throws IOException {
+    public ArrayList<Reactor> parse(String filePath) throws IOException, ParserConfigurationException, SAXException {
         ArrayList<Reactor> result = new ArrayList<>();
-        try {
+
             File file = new File(filePath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -41,10 +44,8 @@ public class ReactorParserXml implements ReactorParser {
                     Reactor reactor = new Reactor(name, classReactor, burnup, kpd, enrichment, thermal_capacity, electrical_capacity, life_time, first_load, "xml");
                     result.add(reactor);
                 }
+
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return result;
     }
 }
