@@ -69,9 +69,16 @@ public class ReactorsManipulation {
         Map<String, Double> reactorBurnupMap = reactorCollection.getReactors().stream()
                 .collect(Collectors.toMap(r -> r.getClassReactor(), r -> r.getBurnup()));
 
-        storageBD.getUnits().forEach(u -> {u.setBurnup(reactorBurnupMap.getOrDefault(u.getClass_(), 0.0));
-        });
-        storageBD.getUnits().forEach(u -> {if(u.getBurnup()==0.0) u.setBurnup(reactorBurnupMap.getOrDefault(u.getType(), 0.0));
+        storageBD.getUnits().forEach(u -> {
+            u.setBurnup(reactorBurnupMap.getOrDefault(u.getClass_(), 0.0));
+            if(u.getBurnup()==0.0){
+                if(u.getClass_().equals("AGR")) u.setBurnup(reactorBurnupMap.getOrDefault("MAGNOX", 0.0));
+                else if(u.getClass_().equals("Hualong 1")) u.setBurnup(reactorBurnupMap.getOrDefault("CPR-1000", 0.0));
+                        else if(u.getClass_().equals("CNP-1000")) u.setBurnup(reactorBurnupMap.getOrDefault("CPR-1000", 0.0));
+                            else if(u.getClass_().substring(0,3).equals("PWR")) u.setBurnup(reactorBurnupMap.getOrDefault("PWR", 0.0));
+                                else if(u.getClass_().substring(0,4).equals("VVER")) u.setBurnup(reactorBurnupMap.getOrDefault("VVER-1200", 0.0));
+
+            }
         });
 
     }
