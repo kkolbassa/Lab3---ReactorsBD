@@ -244,7 +244,7 @@ public class JFrameProgram extends javax.swing.JFrame {
             try {
                 File file = chooser.getSelectedFile();
                 rm.setReactorCollection(pm.importData(String.valueOf(file)));
-                //if(rm.getReactorCollection().getReactors().isEmpty()) throw new Exception();
+                if(rm.getReactorCollection().getReactors().isEmpty()) throw new Exception();
                 jLabelParserUpdate.setText(rm.areDataReactorGet());
             }catch (Exception r){
                 JOptionPane.showMessageDialog (null, "Ошибка чтения файла для парсинга", "Oшибка", JOptionPane.ERROR_MESSAGE);
@@ -281,7 +281,7 @@ public class JFrameProgram extends javax.swing.JFrame {
        else {
            try {
                bd.createBD();
-               jLabelCreationBD.setText("БД создана");
+               jLabelCreationBD.setText(bd.areTablesExist());
                jLabelDeleteBD.setText("");
            } catch (Exception r) {
                JOptionPane.showMessageDialog(null, "Ошибка создания БД", "Oшибка", JOptionPane.ERROR_MESSAGE);

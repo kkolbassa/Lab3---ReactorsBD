@@ -90,11 +90,9 @@ public class ReactorsManipulation {
     }
 
     public void addFuelConsumption(){
-        storageBD.getUnits().forEach(u -> {
+        storageBD.getUnits().stream().filter(unit -> unit.getBurnup()!=0.0).forEach(u -> {
             if(u.getLoad_factor() == 0) u.setLoad_factor(90);
-            if(u.getBurnup()!=0.0) {
-                u.setFuelConsumption(365*u.getThermal_capacity() / u.getBurnup() * u.getLoad_factor() * 0.01/1000);
-            }
+            u.setFuelConsumption(365*u.getThermal_capacity() / u.getBurnup() * u.getLoad_factor() * 0.01/1000);
         });
 
         Map<String, Double> reactorFirstLoadMap = reactorCollection.getReactors().stream()
