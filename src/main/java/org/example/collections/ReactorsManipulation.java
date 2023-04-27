@@ -102,7 +102,11 @@ public class ReactorsManipulation {
             if(unit.getCommercial_operation()!=null&&unit.getCommercial_operation().substring(0, 4).equals("2023")){
                 storageBD.addUnit(unit);
                 int index = storageBD.getUnits().indexOf(unit);
-                storageBD.getUnits().get(index).setFuelConsumption(reactorFirstLoadMap.getOrDefault(unit.getType(), 0.0));
+                storageBD.getUnits().get(index).setFuelConsumption(reactorFirstLoadMap.getOrDefault(unit.getClass_(), 0.0));
+                if(storageBD.getUnits().get(index).getClass_().equals("Hualong 1")) storageBD.getUnits().get(index)
+                        .setFuelConsumption(reactorFirstLoadMap.getOrDefault("CPR-1000", 0.0));
+                else if (storageBD.getUnits().get(index).getClass_().substring(0,4).equals("VVER"))storageBD.getUnits().get(index)
+                        .setFuelConsumption(reactorFirstLoadMap.getOrDefault("VVER-1200", 0.0));
             }
         });
     }
