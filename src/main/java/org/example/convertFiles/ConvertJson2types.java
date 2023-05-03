@@ -8,18 +8,28 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class ConvertJson2types {
+
+    public ConvertJson2types() throws IOException {
+        InputStream inputStream = getClass().getResourceAsStream("/Reactors_json.json");
+
+        OutputStream outputStream = new FileOutputStream("./Reactors_json.json");
+
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+    }
 
     public void convert2xml() throws IOException {
         // Создание объекта ObjectMapper для чтения JSON
         ObjectMapper jsonMapper = new ObjectMapper();
 
         // Чтение JSON из файла
-        JsonNode rootNode = jsonMapper.readTree(new File("./data/Reactors_json.json"));
-
+        JsonNode rootNode = jsonMapper.readTree(new File("./Reactors_json.json"));
         // Создание объекта ObjectMapper для записи XML
         XmlMapper xmlMapper = new XmlMapper();
 
@@ -30,7 +40,7 @@ public class ConvertJson2types {
         // Преобразование JSON в XML
         ObjectNode xmlNode = xmlMapper.createObjectNode();
         xmlNode.set("reactors", rootNode);
-        xmlMapper.writeValue(new File("./data/Reactors_xml.xml"), xmlNode);
+        xmlMapper.writeValue(new File("./Reactors_xml.xml"), xmlNode);
     }
 
     public void convert2yaml() throws IOException {
@@ -38,13 +48,13 @@ public class ConvertJson2types {
         ObjectMapper jsonMapper = new ObjectMapper();
 
         // Чтение JSON из файла
-        JsonNode rootNode = jsonMapper.readTree(new File("./data/Reactors_json.json"));
+        JsonNode rootNode = jsonMapper.readTree(new File("./Reactors_json.json"));
 
         // Создание объекта YAMLMapper для записи YAML
         YAMLMapper yamlMapper = new YAMLMapper();
 
         // Преобразование JSON в YAML
-        yamlMapper.writeValue(new File("./data/Reactors_yaml.yaml"), rootNode);
+        yamlMapper.writeValue(new File("./Reactors_yaml.yaml"), rootNode);
 
     }
 }
